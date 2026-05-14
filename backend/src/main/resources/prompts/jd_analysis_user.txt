@@ -1,0 +1,66 @@
+Analyze the following job description.
+
+JOB DESCRIPTION:
+===
+{jobDescription}
+===
+
+ADDITIONAL CONTEXT:
+- Company: {companyName}
+- Role title (if visible): {roleTitle}
+- Location (if visible): {location}
+- Source channel: {sourceChannel}
+- Salary info (if visible): {salaryInfo}
+- Language requirement (if visible): {languageRequirement}
+- Relocation/visa wording (if visible): {relocationWording}
+- User note: {personalNote}
+
+STORED COMPANY DATA (if available):
+{companyData}
+
+USER'S CURRENT PROFILE:
+- Current week of search: {searchWeek}
+- Target cities: Munich (primary), Berlin, Hamburg/Frankfurt (backup)
+- Minimum salary: configurable per city
+- Target salary range: configurable
+- Looking for: permanent employment (not contract/freelance)
+
+Return ONLY this JSON structure. For the "extracted" fields: extract them from the JD text even if they were not provided in ADDITIONAL CONTEXT. If truly not findable, return null.
+
+{
+  "extractedTitle": "Job title extracted from the JD (e.g. 'Senior Backend Engineer')",
+  "extractedCompany": "Company name extracted from JD (e.g. 'Scalable Capital') or null",
+  "extractedLocation": "Location/city extracted from JD (e.g. 'Munich, Germany') or null",
+  "extractedSalaryInfo": "Salary range if mentioned in JD (e.g. '€80,000 - €100,000') or null",
+  "extractedLanguageRequirement": "Language requirement extracted (e.g. 'English required, German B2 nice to have') or null",
+  "extractedRelocationWording": "Relocation/visa wording if present in JD (e.g. 'We support relocation and visa sponsorship') or null",
+  "recommendation": "APPLY|MAYBE|SKIP",
+  "fitScore": 0-100,
+  "confidence": 0-100,
+  "summary": "2-3 sentence summary of the fit assessment",
+  "reasonsToApply": ["..."],
+  "reasonsToSkip": ["..."],
+  "hardBlockers": ["..."],
+  "redFlags": ["..."],
+  "uncertainties": ["..."],
+  "missingInfo": ["..."],
+  "roleFit": 0-100,
+  "stackFit": 0-100,
+  "domainFit": 0-100,
+  "seniorityFit": 0-100,
+  "locationFit": 0-100,
+  "languageFit": 0-100,
+  "companyTypeFit": 0-100,
+  "germanRequirement": "NONE|OPTIONAL|PREFERRED|REQUIRED|UNKNOWN",
+  "relocationRisk": "LOW|MEDIUM|HIGH|BLOCKER|UNCERTAIN",
+  "salaryRisk": "LOW|MEDIUM|HIGH|BLOCKER|UNCERTAIN",
+  "freshnessRisk": "LOW|MEDIUM|HIGH|UNKNOWN",
+  "suggestedPositioning": "How the user should position themselves for this specific role",
+  "suggestedOutreachAngle": "1-2 specific fit reasons to lead with in outreach",
+  "suggestedSalaryStrategy": "Salary phrasing appropriate for this company/city/role",
+  "suggestedFirstMessage": "Short copy-paste recruiter message (2-3 sentences max)",
+  "suggestedNextAction": "APPLY_DIRECTLY|CONTACT_RECRUITER|SEEK_REFERRAL|RESEARCH_MORE|SKIP",
+  "suggestedPriority": 1-100,
+  "stackKeywords": ["extracted stack/tech keywords"],
+  "domainKeywords": ["extracted domain keywords"]
+}

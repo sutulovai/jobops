@@ -1,0 +1,34 @@
+Generate a {messageType} message for the user.
+
+CONTEXT:
+- Recipient name: {recipientName}
+- Recipient title: {recipientTitle}
+- Recipient type: {recipientType}
+- Company name: {companyName}
+- Role applied for: {roleTitle}
+- Vacancy fit score: {fitScore}
+- Vacancy recommendation: {recommendation}
+- Company priority tier: {priorityTier}
+- Has already applied: {hasApplied}
+- Application stage: {applicationStage}
+- Channel: {channel}
+- Relocation mention: {relocationMention} (yes/no — whether to mention relocation)
+- Tone: {tone}
+- Custom instructions: {customInstructions}
+
+JOB-SPECIFIC FIT ANGLE (from JD analysis):
+{fitAngle}
+
+SALARY CONTEXT (if needed):
+- City: {city}
+- Company type: {companyType}
+
+Return JSON:
+{
+  "generatedText": "The full message text, ready to copy-paste",
+  "suggestedSubject": "Email subject line if applicable, null otherwise",
+  "wordCount": number,
+  "toneUsed": "professional|friendly|direct|warm",
+  "relocationMentioned": true|false,
+  "salaryMentioned": true|false
+}

@@ -1,0 +1,4 @@
+-- Seed companies are inserted for the first user (from registration).
+-- They will be inserted via application startup logic, not raw SQL (no user_id available at migration time).
+-- This migration is intentionally empty; seeding happens via DataSeeder component.
+-- See: com.sutulovai.jobops.service.DataSeeder

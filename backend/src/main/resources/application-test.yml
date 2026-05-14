@@ -1,0 +1,13 @@
+# Used only when spring.profiles.active includes "test" (e.g. @ActiveProfiles("test")).
+# Does not apply to ./gradlew bootRun unless you explicitly set that profile.
+jobops:
+  jwt:
+    secret: test-secret-key-that-is-at-least-256-bits-long-for-testing-purposes-only
+    access-token-expiration-ms: 3600000
+    refresh-token-expiration-ms: 86400000
+
+  file-storage:
+    root: ${java.io.tmpdir}/jobops-test-storage
+
+  openai:
+    api-key: test-key-not-used

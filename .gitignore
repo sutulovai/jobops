@@ -1,0 +1,33 @@
+# Secrets
+.env
+application-local.yml
+
+# Backend
+backend/.gradle/
+backend/build/
+backend/bin/
+backend/out/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# OS
+.DS_Store
+*.DS_Store
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.cursor/
+*.swp
+
+# Test artifacts
+*.class
+*.jar
+!gradle-wrapper.jar
+
+# Storage
+.jobops/

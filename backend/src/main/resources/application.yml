@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: jobops
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/jobops}
+    username: ${SPRING_DATASOURCE_USERNAME:jobops}
+    password: ${SPRING_DATASOURCE_PASSWORD:jobops}
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+
+  jooq:
+    sql-dialect: postgres
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+jobops:
+  jwt:
+    secret: ${JOBOPS_JWT_SECRET:changeme-in-production-use-at-least-256-bits-long-secret-key-here}
+    access-token-expiration-ms: 900000       # 15 minutes
+    refresh-token-expiration-ms: 604800000   # 7 days
+
+  file-storage:
+    root: ${JOBOPS_FILE_STORAGE_ROOT:${user.home}/.jobops/storage}
+
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    base-url: https://api.openai.com
+    model: gpt-4o-mini
+    analysis-model: gpt-4o
+
+logging:
+  level:
+    com.sutulovai.jobops: INFO
+    org.jooq: WARN
+    org.flywaydb: INFO

@@ -1,0 +1,71 @@
+create table vacancies (
+    id                     uuid        not null default gen_random_uuid() primary key,
+    user_id                uuid        not null references users (id) on delete cascade,
+    company_id             uuid        references companies (id) on delete set null,
+    title                  text        not null,
+    location               text,
+    remote_policy          text,
+    url                    text,
+    source_channel         text,
+    job_description_text   text,
+    stack_keywords         text[]      not null default '{}',
+    domain_keywords        text[]      not null default '{}',
+    salary_range_min       int,
+    salary_range_max       int,
+    salary_currency        text        default 'EUR',
+    language_requirement   text,
+    relocation_visa_wording text,
+    seniority              text,
+    employment_type        text,
+    status                 text        not null default 'DISCOVERED',
+    ai_fit_score           int,
+    ai_confidence          int,
+    ai_recommendation      text,
+    ai_reasoning           text,
+    red_flags              text[]      not null default '{}',
+    uncertainty_flags      text[]      not null default '{}',
+    posted_date            date,
+    closing_date           date,
+    discovered_date        date,
+    last_reviewed_date     date,
+    next_action_date       date,
+    created_at             timestamptz not null default now(),
+    updated_at             timestamptz not null default now()
+);
+
+create index idx_vacancies_user_id on vacancies (user_id);
+create index idx_vacancies_user_status on vacancies (user_id, status);
+create index idx_vacancies_company on vacancies (company_id);
+
+create table job_sources (
+    id                       uuid        not null default gen_random_uuid() primary key,
+    vacancy_id               uuid        not null unique references vacancies (id) on delete cascade,
+    source_channel           text,
+    source_url               text,
+    original_url             text,
+    canonical_url            text,
+    source_platform          text,
+    discovered_date          date,
+    pasted_date              timestamptz not null default now(),
+    posted_date              date,
+    closing_date             date,
+    saved_search_id          uuid,
+    search_query             text,
+    raw_job_description      text,
+    raw_source_notes         text,
+    visible_salary_range     text,
+    visible_location         text,
+    visible_remote_policy    text,
+    visible_employment_type  text,
+    visible_language_requirement text,
+    visible_relocation_wording text,
+    source_reliability       text        not null default 'UNKNOWN',
+    source_freshness         text        not null default 'UNKNOWN',
+    duplicate_status         text        not null default 'UNIQUE',
+    duplicate_of_vacancy_id  uuid        references vacancies (id) on delete set null,
+    job_active               text        not null default 'UNKNOWN',
+    last_checked_date        date,
+    created_at               timestamptz not null default now()
+);
+
+create index idx_job_sources_vacancy on job_sources (vacancy_id);

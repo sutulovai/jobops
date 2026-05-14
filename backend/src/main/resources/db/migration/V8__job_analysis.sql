@@ -1,0 +1,50 @@
+create table job_analyses (
+    id                         uuid        not null default gen_random_uuid() primary key,
+    vacancy_id                 uuid        not null unique references vacancies (id) on delete cascade,
+    recommendation             text        not null,
+    fit_score                  int         not null,
+    confidence                 int         not null default 70,
+    summary                    text        not null,
+    reasons_to_apply           text[]      not null default '{}',
+    reasons_to_skip            text[]      not null default '{}',
+    red_flags                  text[]      not null default '{}',
+    uncertainties              text[]      not null default '{}',
+    missing_info               text[]      not null default '{}',
+    hard_blockers              text[]      not null default '{}',
+    role_fit                   int,
+    stack_fit                  int,
+    domain_fit                 int,
+    seniority_fit              int,
+    location_fit               int,
+    language_fit               int,
+    company_type_fit           int,
+    german_requirement         text,
+    relocation_risk            text,
+    salary_risk                text,
+    freshness_risk             text,
+    suggested_positioning      text,
+    suggested_outreach_angle   text,
+    suggested_salary_strategy  text,
+    suggested_first_message    text,
+    suggested_next_action      text,
+    suggested_priority         int,
+    ai_model                   text,
+    ai_tokens_used             int,
+    created_at                 timestamptz not null default now()
+);
+
+create table ai_interactions (
+    id              uuid        not null default gen_random_uuid() primary key,
+    user_id         uuid        not null references users (id) on delete cascade,
+    interaction_type text       not null,
+    model           text,
+    prompt_tokens   int,
+    completion_tokens int,
+    total_tokens    int,
+    latency_ms      int,
+    success         boolean     not null default true,
+    error_message   text,
+    created_at      timestamptz not null default now()
+);
+
+create index idx_ai_interactions_user on ai_interactions (user_id, created_at desc);
